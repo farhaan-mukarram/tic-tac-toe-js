@@ -10,9 +10,12 @@
 }
 
 #app {
+  position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  column-gap: 2rem;
   min-height: 100vh;
 }
 
@@ -37,4 +40,14 @@
 
 .cell:nth-of-type(n + 4) {
   border-top: var(--border-width) solid #000;
+}
+
+.message {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  top: 10%;
+  left: 0;
 }
