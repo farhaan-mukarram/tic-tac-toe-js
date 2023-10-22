@@ -7,6 +7,10 @@ const playerSymbols = { 0: "O", 1: "X" };
 
 let currentPlayer = Math.floor(Math.random());
 
+document.querySelector(".message").innerHTML = `Player ${
+  currentPlayer + 1
+} starts`;
+
 let numberOfEmptyCells = NUMBER_OF_CELLS;
 
 let grid = [
@@ -14,15 +18,6 @@ let grid = [
   [-1, -1, -1],
   [-1, -1, -1],
 ];
-
-let gridMarkup = ``;
-
-for (let index = 0; index < NUMBER_OF_CELLS; index++) {
-  gridMarkup += `
-  <div class="cell" data-cell-id="${index}">
-  </div>
-  `;
-}
 
 function checkIfCurrentPlayerHasWon() {
   // check 1st row
@@ -122,7 +117,6 @@ function handleClick(event) {
         currentPlayer + 1
       } Wins!`;
 
-      console.log(`Player ${currentPlayer + 1} is the Winner!`);
       hasGameEnded = true;
       return;
     }
@@ -136,9 +130,10 @@ function handleClick(event) {
 
     // Toggle between players
     currentPlayer = currentPlayer === 0 ? 1 : 0;
+    document.querySelector(".message").innerHTML = `Player ${
+      currentPlayer + 1
+    }'s turn`;
   }
 }
-
-document.querySelector(".grid").innerHTML = gridMarkup;
 
 document.querySelector(".grid").addEventListener("click", handleClick);
