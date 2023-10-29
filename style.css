@@ -31,6 +31,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .cell:nth-of-type(3n + 1),
