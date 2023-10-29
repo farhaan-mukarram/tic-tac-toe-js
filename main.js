@@ -20,12 +20,14 @@ let grid = [
 ];
 
 function checkIfCurrentPlayerHasWon() {
+  const line = document.querySelector(".line");
   // check 1st row
   if (
     grid[0][0] === currentPlayer &&
     grid[0][1] === currentPlayer &&
     grid[0][2] === currentPlayer
   ) {
+    line.className = "line row row-1";
     return true;
   }
 
@@ -35,6 +37,7 @@ function checkIfCurrentPlayerHasWon() {
     grid[1][1] === currentPlayer &&
     grid[1][2] === currentPlayer
   ) {
+    line.className = "line row row-2";
     return true;
   }
 
@@ -44,6 +47,8 @@ function checkIfCurrentPlayerHasWon() {
     grid[2][1] === currentPlayer &&
     grid[2][2] === currentPlayer
   ) {
+    line.className = "line row row-3";
+
     return true;
   }
 
@@ -53,6 +58,8 @@ function checkIfCurrentPlayerHasWon() {
     grid[1][0] === currentPlayer &&
     grid[2][0] === currentPlayer
   ) {
+    line.className = "line col col-1";
+
     return true;
   }
 
@@ -62,6 +69,7 @@ function checkIfCurrentPlayerHasWon() {
     grid[1][1] === currentPlayer &&
     grid[2][1] === currentPlayer
   ) {
+    line.className = "line col col-2";
     return true;
   }
 
@@ -71,6 +79,8 @@ function checkIfCurrentPlayerHasWon() {
     grid[1][2] === currentPlayer &&
     grid[2][2] === currentPlayer
   ) {
+    line.className = "line col col-3";
+
     return true;
   }
 
@@ -80,6 +90,8 @@ function checkIfCurrentPlayerHasWon() {
     grid[1][1] === currentPlayer &&
     grid[2][2] === currentPlayer
   ) {
+    line.className = "line diagonal leading";
+
     return true;
   }
 
@@ -89,6 +101,8 @@ function checkIfCurrentPlayerHasWon() {
     grid[1][1] === currentPlayer &&
     grid[0][2] === currentPlayer
   ) {
+    line.className = "line diagonal other";
+
     return true;
   }
 

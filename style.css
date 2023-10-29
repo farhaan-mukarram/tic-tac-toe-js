@@ -1,6 +1,6 @@
 :root {
-  --grid-size: 400px;
-  --border-width: 5px;
+  --grid-size: 25rem;
+  --border-width: 0.25rem;
 }
 
 * {
@@ -25,6 +25,8 @@
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);
+  position: relative;
+  overflow: hidden;
 }
 
 .cell {
@@ -51,4 +53,70 @@
   font-weight: 600;
   top: 10%;
   left: 0;
+}
+
+.grid > .line {
+  position: absolute;
+  background-color: #ff0000;
+  top: 0;
+  left: 0;
+}
+
+.line.row {
+  width: 100%;
+  height: var(--border-width);
+}
+
+.line.col {
+  height: 100%;
+  width: var(--border-width);
+}
+
+.line.row-1 {
+  transform: translateY(calc(var(--grid-size) / 6));
+}
+
+.line.row-2 {
+  transform: translateY(calc(var(--grid-size) / 2));
+}
+
+.line.row-3 {
+  transform: translateY(
+    calc((2 * var(--grid-size)) / 3 + (var(--grid-size) / 6))
+  );
+}
+
+.line.col-1 {
+  transform: translateX(calc(var(--grid-size) / 6));
+}
+
+.line.col-2 {
+  transform: translateX(calc(var(--grid-size) / 2));
+}
+
+.line.col-3 {
+  transform: translateX(
+    calc((2 * var(--grid-size)) / 3 + (var(--grid-size) / 6))
+  );
+}
+
+.line.diagonal.leading {
+  transform-origin: top left;
+  transform: translate(-50%, -50%);
+  rotate: 135deg;
+  left: calc(-1 * var(--border-width));
+}
+
+.line.diagonal {
+  height: 500%;
+  width: var(--border-width);
+}
+
+.line.diagonal.other {
+  top: calc(-1 * var(--border-width));
+  right: 0;
+  left: auto;
+  transform-origin: top right;
+  transform: translate(-50%, -50%);
+  rotate: 225deg;
 }
