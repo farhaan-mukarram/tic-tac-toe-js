@@ -1,6 +1,7 @@
 :root {
   --grid-size: 25rem;
   --border-width: 0.25rem;
+  --transition-duration: 2s;
 }
 
 * {
@@ -60,14 +61,18 @@
   background-color: #ff0000;
   top: 0;
   left: 0;
+  height: 0;
+  width: 0;
 }
 
 .line.row {
+  transition: width var(--transition-duration);
   width: 100%;
   height: var(--border-width);
 }
 
 .line.col {
+  transition: height var(--transition-duration);
   height: 100%;
   width: var(--border-width);
 }
@@ -108,6 +113,7 @@
 }
 
 .line.diagonal {
+  transition: height var(--transition-duration);
   height: 500%;
   width: var(--border-width);
 }
