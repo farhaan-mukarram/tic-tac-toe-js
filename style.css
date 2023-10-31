@@ -34,7 +34,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  font-weight: bold;
+  font-size: 3rem;
 }
 
 .cell:nth-of-type(3n + 1),
