@@ -120,7 +120,13 @@ function handleClick(event) {
 
   if (grid[row][col] === -1) {
     const playerSymbol = playerSymbols[currentPlayer];
-    clickedEl.innerHTML = playerSymbol;
+    const el = document.createElement("div");
+    el.innerHTML = playerSymbol;
+    el.animate([{ transform: "scale(0)" }, { transform: "scale(1)" }], {
+      duration: 300,
+      iterations: 1,
+    });
+    clickedEl.appendChild(el);
     grid[row][col] = currentPlayer;
     numberOfEmptyCells -= 1;
 
