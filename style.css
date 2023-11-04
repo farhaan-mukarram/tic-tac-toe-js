@@ -77,9 +77,11 @@
   transition: height var(--transition-duration);
   height: 100%;
   width: var(--border-width);
+  left: calc(var(--border-width) * -1);
 }
 
 .line.row-1 {
+  top: calc(var(--border-width) * -1);
   transform: translateY(calc(var(--grid-size) / 6));
 }
 
@@ -102,6 +104,7 @@
 }
 
 .line.col-3 {
+  left: 0;
   transform: translateX(
     calc((2 * var(--grid-size)) / 3 + (var(--grid-size) / 6))
   );
