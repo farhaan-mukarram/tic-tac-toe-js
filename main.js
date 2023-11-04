@@ -7,9 +7,9 @@ const playerSymbols = { 0: "O", 1: "X" };
 
 let currentPlayer = Math.round(Math.random());
 
-document.querySelector(".message").innerHTML = `Player ${
-  currentPlayer + 1
-} starts`;
+document.querySelector(
+  ".message"
+).innerHTML = `${playerSymbols[currentPlayer]} starts`;
 
 let numberOfEmptyCells = NUMBER_OF_CELLS;
 
@@ -133,9 +133,9 @@ function handleClick(event) {
     const hasCurrentPlayerWon = checkIfCurrentPlayerHasWon();
 
     if (hasCurrentPlayerWon) {
-      document.querySelector(".message").innerHTML = `Player ${
-        currentPlayer + 1
-      } Wins!`;
+      document.querySelector(
+        ".message"
+      ).innerHTML = `🎉 ${playerSymbols[currentPlayer]} Wins 🎉`;
 
       hasGameEnded = true;
       return;
@@ -143,16 +143,16 @@ function handleClick(event) {
 
     if (numberOfEmptyCells === 0) {
       document.querySelector(".message").innerHTML = `It's a tie!`;
-      console.log(`It's a tie!`);
       hasGameEnded = true;
       return;
     }
 
     // Toggle between players
     currentPlayer = currentPlayer === 0 ? 1 : 0;
-    document.querySelector(".message").innerHTML = `Player ${
-      currentPlayer + 1
-    }'s turn`;
+
+    document.querySelector(
+      ".message"
+    ).innerHTML = `${playerSymbols[currentPlayer]}'s turn`;
   }
 }
 
