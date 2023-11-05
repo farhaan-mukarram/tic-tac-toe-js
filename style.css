@@ -22,6 +22,7 @@
 }
 
 .grid {
+  z-index: 0;
   height: var(--grid-size);
   width: var(--grid-size);
   display: grid;
@@ -130,4 +131,24 @@
   transform-origin: top right;
   transform: translate(-50%, -50%);
   rotate: 225deg;
+}
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.overlay button {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: #000;
+  color: #fff;
+  font-size: 1.75rem;
+  cursor: pointer;
 }

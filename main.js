@@ -19,6 +19,32 @@ let grid = [
   [-1, -1, -1],
 ];
 
+function initializeGame() {
+  document.querySelectorAll(".cell").forEach((cell) => {
+    cell.innerHTML = "";
+  });
+
+  document.querySelector(".line").className = "line";
+
+  document.querySelector(".overlay").style.display = "none";
+
+  hasGameEnded = false;
+
+  currentPlayer = Math.round(Math.random());
+
+  document.querySelector(
+    ".message"
+  ).innerHTML = `${playerSymbols[currentPlayer]} starts`;
+
+  numberOfEmptyCells = NUMBER_OF_CELLS;
+
+  grid = [
+    [-1, -1, -1],
+    [-1, -1, -1],
+    [-1, -1, -1],
+  ];
+}
+
 function checkIfCurrentPlayerHasWon() {
   const line = document.querySelector(".line");
   // check 1st row
@@ -138,6 +164,7 @@ function handleClick(event) {
       ).innerHTML = `🎉 ${playerSymbols[currentPlayer]} Wins 🎉`;
 
       hasGameEnded = true;
+      document.querySelector(".overlay").style.display = "flex";
       return;
     }
 
@@ -157,3 +184,4 @@ function handleClick(event) {
 }
 
 document.querySelector(".grid").addEventListener("click", handleClick);
+document.getElementById("reset-btn").addEventListener("click", initializeGame);
