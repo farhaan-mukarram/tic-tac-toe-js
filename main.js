@@ -1,5 +1,3 @@
-import "./style.css";
-
 const NUMBER_OF_CELLS = 9;
 
 let hasGameEnded = false;
