@@ -168,6 +168,7 @@ function handleClick(event) {
 
     if (numberOfEmptyCells === 0) {
       document.querySelector(".message").innerHTML = `It's a tie!`;
+      document.querySelector(".overlay").style.display = "flex";
       hasGameEnded = true;
       return;
     }
