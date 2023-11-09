@@ -1,14 +1,14 @@
-const NUMBER_OF_CELLS = 9;
+const messageElement = document.querySelector(".message");
+const lineElement = document.querySelector(".line");
+const overlayElement = document.querySelector(".overlay");
+const gridElement = document.querySelector(".grid");
+const resetBtn = document.getElementById("reset-btn");
 
-let hasGameEnded = false;
+const NUMBER_OF_CELLS = 9;
 const playerSymbols = { 0: "O", 1: "X" };
 
+let hasGameEnded = false;
 let currentPlayer = Math.round(Math.random());
-
-document.querySelector(
-  ".message"
-).innerHTML = `${playerSymbols[currentPlayer]} starts`;
-
 let numberOfEmptyCells = NUMBER_OF_CELLS;
 
 let grid = [
@@ -17,22 +17,21 @@ let grid = [
   [-1, -1, -1],
 ];
 
+setMessage(`${playerSymbols[currentPlayer]} starts`);
+
 function initializeGame() {
   document.querySelectorAll(".cell").forEach((cell) => {
     cell.innerHTML = "";
   });
 
-  document.querySelector(".line").className = "line";
-
-  document.querySelector(".overlay").style.display = "none";
+  lineElement.className = "line";
+  overlayElement.style.display = "none";
 
   hasGameEnded = false;
 
   currentPlayer = Math.round(Math.random());
 
-  document.querySelector(
-    ".message"
-  ).innerHTML = `${playerSymbols[currentPlayer]} starts`;
+  setMessage(`${playerSymbols[currentPlayer]} starts`);
 
   numberOfEmptyCells = NUMBER_OF_CELLS;
 
@@ -44,14 +43,13 @@ function initializeGame() {
 }
 
 function checkIfCurrentPlayerHasWon() {
-  const line = document.querySelector(".line");
   // check 1st row
   if (
     grid[0][0] === currentPlayer &&
     grid[0][1] === currentPlayer &&
     grid[0][2] === currentPlayer
   ) {
-    line.className = "line row row-1";
+    lineElement.className = "line row row-1";
     return true;
   }
 
@@ -61,7 +59,7 @@ function checkIfCurrentPlayerHasWon() {
     grid[1][1] === currentPlayer &&
     grid[1][2] === currentPlayer
   ) {
-    line.className = "line row row-2";
+    lineElement.className = "line row row-2";
     return true;
   }
 
@@ -71,7 +69,7 @@ function checkIfCurrentPlayerHasWon() {
     grid[2][1] === currentPlayer &&
     grid[2][2] === currentPlayer
   ) {
-    line.className = "line row row-3";
+    lineElement.className = "line row row-3";
 
     return true;
   }
@@ -82,7 +80,7 @@ function checkIfCurrentPlayerHasWon() {
     grid[1][0] === currentPlayer &&
     grid[2][0] === currentPlayer
   ) {
-    line.className = "line col col-1";
+    lineElement.className = "line col col-1";
 
     return true;
   }
@@ -93,7 +91,7 @@ function checkIfCurrentPlayerHasWon() {
     grid[1][1] === currentPlayer &&
     grid[2][1] === currentPlayer
   ) {
-    line.className = "line col col-2";
+    lineElement.className = "line col col-2";
     return true;
   }
 
@@ -103,7 +101,7 @@ function checkIfCurrentPlayerHasWon() {
     grid[1][2] === currentPlayer &&
     grid[2][2] === currentPlayer
   ) {
-    line.className = "line col col-3";
+    lineElement.className = "line col col-3";
 
     return true;
   }
@@ -114,7 +112,7 @@ function checkIfCurrentPlayerHasWon() {
     grid[1][1] === currentPlayer &&
     grid[2][2] === currentPlayer
   ) {
-    line.className = "line diagonal leading";
+    lineElement.className = "line diagonal leading";
 
     return true;
   }
@@ -125,12 +123,68 @@ function checkIfCurrentPlayerHasWon() {
     grid[1][1] === currentPlayer &&
     grid[0][2] === currentPlayer
   ) {
-    line.className = "line diagonal other";
+    lineElement.className = "line diagonal other";
 
     return true;
   }
 
   return false;
+}
+
+function setMessage(message) {
+  messageElement.innerHTML = message;
+}
+
+function swapTurns() {
+  currentPlayer = currentPlayer === 0 ? 1 : 0;
+
+  setMessage(`${playerSymbols[currentPlayer]}'s turn`);
+}
+
+function insertSymbol(clickedElement) {
+  const playerSymbol = playerSymbols[currentPlayer];
+  const el = document.createElement("div");
+
+  el.innerHTML = playerSymbol;
+  el.animate([{ transform: "scale(0)" }, { transform: "scale(1)" }], {
+    duration: 300,
+    iterations: 1,
+  });
+
+  clickedElement.appendChild(el);
+}
+
+function takeTurn(row, col, clickedEl) {
+  if (grid[row][col] === -1) {
+    grid[row][col] = currentPlayer;
+    numberOfEmptyCells -= 1;
+
+    // Insert player symbol with an animation
+    insertSymbol(clickedEl);
+
+    const hasCurrentPlayerWon = checkIfCurrentPlayerHasWon();
+
+    // Handle win
+    if (hasCurrentPlayerWon) {
+      setMessage(`🎉 ${playerSymbols[currentPlayer]} Wins 🎉`);
+      hasGameEnded = true;
+      overlayElement.style.display = "flex";
+
+      return;
+    }
+
+    // Handle draw
+    if (numberOfEmptyCells === 0) {
+      setMessage("It's a tie!");
+      overlayElement.style.display = "flex";
+      hasGameEnded = true;
+
+      return;
+    }
+
+    // Toggle between players
+    swapTurns();
+  }
 }
 
 function handleClick(event) {
@@ -142,45 +196,9 @@ function handleClick(event) {
   const row = Math.floor(cellId / 3);
   const col = cellId % 3;
 
-  if (grid[row][col] === -1) {
-    const playerSymbol = playerSymbols[currentPlayer];
-    const el = document.createElement("div");
-    el.innerHTML = playerSymbol;
-    el.animate([{ transform: "scale(0)" }, { transform: "scale(1)" }], {
-      duration: 300,
-      iterations: 1,
-    });
-    clickedEl.appendChild(el);
-    grid[row][col] = currentPlayer;
-    numberOfEmptyCells -= 1;
-
-    const hasCurrentPlayerWon = checkIfCurrentPlayerHasWon();
-
-    if (hasCurrentPlayerWon) {
-      document.querySelector(
-        ".message"
-      ).innerHTML = `🎉 ${playerSymbols[currentPlayer]} Wins 🎉`;
-
-      hasGameEnded = true;
-      document.querySelector(".overlay").style.display = "flex";
-      return;
-    }
-
-    if (numberOfEmptyCells === 0) {
-      document.querySelector(".message").innerHTML = `It's a tie!`;
-      document.querySelector(".overlay").style.display = "flex";
-      hasGameEnded = true;
-      return;
-    }
-
-    // Toggle between players
-    currentPlayer = currentPlayer === 0 ? 1 : 0;
-
-    document.querySelector(
-      ".message"
-    ).innerHTML = `${playerSymbols[currentPlayer]}'s turn`;
-  }
+  // Take a turn
+  takeTurn(row, col, clickedEl);
 }
 
-document.querySelector(".grid").addEventListener("click", handleClick);
-document.getElementById("reset-btn").addEventListener("click", initializeGame);
+gridElement.addEventListener("click", handleClick);
+resetBtn.addEventListener("click", initializeGame);
