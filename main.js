@@ -157,7 +157,7 @@ function insertSymbol(clickedCell) {
 }
 
 function takeTurn(row, col, clickedCell) {
-  if (grid[row][col] === -1) {
+  if (isCellEmpty(row, col)) {
     grid[row][col] = currentPlayer;
     numberOfEmptyCells -= 1;
 
@@ -205,9 +205,7 @@ function handleClick(event) {
   else clickedCell = clickedElement.closest("div[data-cell-id]");
 
   // Determine row and column for inserting into grid
-  const cellId = Number(clickedCell?.dataset?.cellId);
-  const row = Math.floor(cellId / 3);
-  const col = cellId % 3;
+  const { row, col } = determineRowAndCol(clickedCell);
 
   // Take a turn
   takeTurn(row, col, clickedCell);
@@ -215,11 +213,10 @@ function handleClick(event) {
 
 function handleMouseEnter(event) {
   const clickedCell = event.target;
-  const cellId = Number(clickedCell?.dataset?.cellId);
-  const row = Math.floor(cellId / 3);
-  const col = cellId % 3;
 
-  if (grid[row][col] === -1) {
+  const { row, col } = determineRowAndCol(clickedCell);
+
+  if (isCellEmpty(row, col)) {
     const playerSymbol = playerSymbols[currentPlayer];
     const el = document.createElement("div");
     el.innerHTML = playerSymbol;
@@ -233,13 +230,23 @@ function handleMouseEnter(event) {
 function handleMouseLeave(event) {
   const clickedCell = event.target;
 
+  const { row, col } = determineRowAndCol(clickedCell);
+
+  if (isCellEmpty(row, col)) {
+    clickedCell.innerHTML = "";
+  }
+}
+
+function determineRowAndCol(clickedCell) {
   const cellId = Number(clickedCell?.dataset?.cellId);
   const row = Math.floor(cellId / 3);
   const col = cellId % 3;
 
-  if (grid[row][col] === -1) {
-    clickedCell.innerHTML = "";
-  }
+  return { row, col };
+}
+
+function isCellEmpty(row, col) {
+  return grid[row][col] === -1;
 }
 
 gridElement.addEventListener("click", handleClick);
