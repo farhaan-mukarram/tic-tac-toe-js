@@ -3,6 +3,7 @@ const lineElement = document.querySelector(".line");
 const overlayElement = document.querySelector(".overlay");
 const gridElement = document.querySelector(".grid");
 const resetBtn = document.getElementById("reset-btn");
+const allCellElements = document.querySelectorAll(".cell");
 
 const NUMBER_OF_CELLS = 9;
 const playerSymbols = { 0: "O", 1: "X" };
@@ -20,7 +21,7 @@ let grid = [
 setMessage(`${playerSymbols[currentPlayer]} starts`);
 
 function initializeGame() {
-  document.querySelectorAll(".cell").forEach((cell) => {
+  allCellElements.forEach((cell) => {
     cell.innerHTML = "";
   });
 
@@ -144,6 +145,7 @@ function swapTurns() {
 function insertSymbol(clickedElement) {
   const playerSymbol = playerSymbols[currentPlayer];
   const el = document.createElement("div");
+  clickedElement.innerHTML = "";
 
   el.innerHTML = playerSymbol;
   el.animate([{ transform: "scale(0)" }, { transform: "scale(1)" }], {
@@ -192,13 +194,58 @@ function handleClick(event) {
 
   const clickedEl = event?.target;
 
-  const cellId = Number(clickedEl?.dataset?.cellId);
+  let clickedCell;
+
+  /* 
+  Determine the cell that was clicked based on whether
+  it contains the data-cell-id custom attribute. If it doesn't,
+  find its closest ancestor that contains the attribute 
+   */
+  if (clickedEl?.dataset?.cellId) clickedCell = clickedEl;
+  else clickedCell = clickedEl.closest("div[data-cell-id]");
+
+  // Determine row and column for inserting into grid
+  const cellId = Number(clickedCell?.dataset?.cellId);
   const row = Math.floor(cellId / 3);
   const col = cellId % 3;
 
   // Take a turn
-  takeTurn(row, col, clickedEl);
+  takeTurn(row, col, clickedCell);
+}
+
+function handleMouseEnter(event) {
+  const clickedCell = event.target;
+  const cellId = Number(clickedCell?.dataset?.cellId);
+  const row = Math.floor(cellId / 3);
+  const col = cellId % 3;
+
+  if (grid[row][col] === -1) {
+    const playerSymbol = playerSymbols[currentPlayer];
+    const el = document.createElement("div");
+    el.innerHTML = playerSymbol;
+    el.style.color = "rgba(0,0,0,0.25)";
+    el.dataset.testId = "1";
+
+    clickedCell.appendChild(el);
+  }
+}
+
+function handleMouseLeave(event) {
+  const clickedCell = event.target;
+
+  const cellId = Number(clickedCell?.dataset?.cellId);
+  const row = Math.floor(cellId / 3);
+  const col = cellId % 3;
+
+  if (grid[row][col] === -1) {
+    clickedCell.innerHTML = "";
+  }
 }
 
 gridElement.addEventListener("click", handleClick);
 resetBtn.addEventListener("click", initializeGame);
+
+allCellElements.forEach((cellElement) => {
+  cellElement.addEventListener("mouseenter", handleMouseEnter);
+  cellElement.addEventListener("mouseleave", handleMouseLeave);
+});
