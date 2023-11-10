@@ -142,10 +142,10 @@ function swapTurns() {
   setMessage(`${playerSymbols[currentPlayer]}'s turn`);
 }
 
-function insertSymbol(clickedElement) {
+function insertSymbol(clickedCell) {
   const playerSymbol = playerSymbols[currentPlayer];
   const el = document.createElement("div");
-  clickedElement.innerHTML = "";
+  clickedCell.innerHTML = "";
 
   el.innerHTML = playerSymbol;
   el.animate([{ transform: "scale(0)" }, { transform: "scale(1)" }], {
@@ -153,16 +153,16 @@ function insertSymbol(clickedElement) {
     iterations: 1,
   });
 
-  clickedElement.appendChild(el);
+  clickedCell.appendChild(el);
 }
 
-function takeTurn(row, col, clickedEl) {
+function takeTurn(row, col, clickedCell) {
   if (grid[row][col] === -1) {
     grid[row][col] = currentPlayer;
     numberOfEmptyCells -= 1;
 
     // Insert player symbol with an animation
-    insertSymbol(clickedEl);
+    insertSymbol(clickedCell);
 
     const hasCurrentPlayerWon = checkIfCurrentPlayerHasWon();
 
@@ -192,7 +192,7 @@ function takeTurn(row, col, clickedEl) {
 function handleClick(event) {
   if (hasGameEnded) return;
 
-  const clickedEl = event?.target;
+  const clickedElement = event?.target;
 
   let clickedCell;
 
@@ -201,8 +201,8 @@ function handleClick(event) {
   it contains the data-cell-id custom attribute. If it doesn't,
   find its closest ancestor that contains the attribute 
    */
-  if (clickedEl?.dataset?.cellId) clickedCell = clickedEl;
-  else clickedCell = clickedEl.closest("div[data-cell-id]");
+  if (clickedElement?.dataset?.cellId) clickedCell = clickedElement;
+  else clickedCell = clickedElement.closest("div[data-cell-id]");
 
   // Determine row and column for inserting into grid
   const cellId = Number(clickedCell?.dataset?.cellId);
