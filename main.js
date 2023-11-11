@@ -144,16 +144,16 @@ function swapTurns() {
 
 function insertSymbol(clickedCell) {
   const playerSymbol = playerSymbols[currentPlayer];
-  const el = document.createElement("div");
+  const element = document.createElement("div");
   clickedCell.innerHTML = "";
 
-  el.innerHTML = playerSymbol;
-  el.animate([{ transform: "scale(0)" }, { transform: "scale(1)" }], {
+  element.innerHTML = playerSymbol;
+  element.animate([{ transform: "scale(0)" }, { transform: "scale(1)" }], {
     duration: 300,
     iterations: 1,
   });
 
-  clickedCell.appendChild(el);
+  clickedCell.appendChild(element);
 }
 
 function takeTurn(row, col, clickedCell) {
@@ -218,12 +218,11 @@ function handleMouseEnter(event) {
 
   if (isCellEmpty(row, col)) {
     const playerSymbol = playerSymbols[currentPlayer];
-    const el = document.createElement("div");
-    el.innerHTML = playerSymbol;
-    el.style.color = "rgba(0,0,0,0.25)";
-    el.dataset.testId = "1";
+    const element = document.createElement("div");
+    element.innerHTML = playerSymbol;
+    element.style.color = "rgba(0,0,0,0.25)";
 
-    clickedCell.appendChild(el);
+    clickedCell.appendChild(element);
   }
 }
 
