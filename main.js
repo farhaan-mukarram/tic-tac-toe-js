@@ -145,6 +145,8 @@ function swapTurns() {
 function insertSymbol(clickedCell) {
   const playerSymbol = playerSymbols[currentPlayer];
   const element = document.createElement("div");
+  element.style.userSelect = 'none'
+
   clickedCell.innerHTML = "";
 
   element.innerHTML = playerSymbol;
@@ -221,6 +223,7 @@ function handleMouseEnter(event) {
     const element = document.createElement("div");
     element.innerHTML = playerSymbol;
     element.style.color = "rgba(0,0,0,0.25)";
+    element.style.userSelect = 'none'
 
     clickedCell.appendChild(element);
   }
