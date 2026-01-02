@@ -4,7 +4,7 @@
 An animated and interactive Tic-tac-toe game built using HTML, CSS, and JS
 
 # Demo:
-https://tic-tac-toe-by-farhaan.netlify.app/
+https://tic-tac-toe-farhaan.netlify.app/
 
 # Features:
 - Turn previews when hovering over an empty cell
