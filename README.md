@@ -14,5 +14,5 @@ https://tic-tac-toe-farhaan.netlify.app/
 # Built with:
 - HTML
 - CSS
-- Javascriot
+- Javascript
 - [Vite](https://vitejs.dev/)
